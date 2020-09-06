@@ -1,0 +1,28 @@
+1、除： /；整除： //；
+2、位运算：
+print(bin(4))  # 0b100
+print(bin(5))  # 0b101
+print(bin(~4), ~4)  # -0b101 -5 按位取反
+print(bin(4 & 5), 4 & 5)  # 0b100 4 按位与
+print(bin(4 | 5), 4 | 5)  # 0b101 5 按位或
+print(bin(4 ^ 5), 4 ^ 5)  # 0b1 1 按位异或
+print(bin(4 << 2), 4 << 2)  # 0b10000 16 左移
+print(bin(4 >> 2), 4 >> 2)  # 0b1 1右移
+3、其他运算符：in; not in; is; not is;
+4、基本类型：整型、浮点型、布尔型
+容器类型：字符串、元组、列表、字典和集合
+5、assert 关键词：断言，当这个关键词后边的条件为 False 时，程序自动崩溃并抛出AssertionError的异常。
+assert 3 > 7
+# AssertionError
+6、while可以加else：
+while 布尔表达式:
+    代码块
+else:
+    代码块
+7、for else：
+当for循环正常执行完的情况下，执行else输出，如果for循环中执行了跳出循环的语句，比如 break，将不执行else代码块的内容，与while - else语句一样。
+8、enumerate(sequence, [start=0])
+sequence：一个序列、迭代器或其他支持迭代对象。
+start：下标起始位置。
+返回 enumerate(枚举) 对象
+9、
