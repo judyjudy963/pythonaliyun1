@@ -1,0 +1,54 @@
+数据下载：!wget -O pokemon_data.csv https://pai-public-data.oss-cn-beijing.aliyuncs.com/pokemon/pokemon.csv
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("./pokemon_data.csv")
+
+# 计算出每个特征有多少百分比是缺失的
+percent_missing = df.isnull().sum() * 100 / len(df)
+missing_value_df = pd.DataFrame({
+    'column_name': df.columns,
+    'percent_missing': percent_missing
+})
+# 查看Top10缺失的
+missing_value_df.sort_values(by='percent_missing', ascending=False).head(10)
+# 查看各代口袋妖怪的数量
+df['generation'].value_counts().plot.bar()
+# 查看每个系口袋妖怪的数量
+df['type1'].value_counts().sort_values(ascending=True).plot.barh()
+# 相关性热力图分析
+plt.subplots(figsize=(20,15))
+ax = plt.axes()
+ax.set_title("Correlation Heatmap")
+corr = df.corr()
+sns.heatmap(corr, 
+            xticklabels=corr.columns.values,
+            yticklabels=corr.columns.values)
+interested = ['hp','attack','defense','sp_attack','sp_defense','speed']
+sns.pairplot(df[interested])
+# 通过相关性分析heatmap分析五个基础属性
+plt.subplots(figsize=(10,8))
+ax = plt.axes()
+ax.set_title("Correlation Heatmap")
+corr = df[interested].corr()
+sns.heatmap(corr, 
+            xticklabels=corr.columns.values,
+            yticklabels=corr.columns.values,
+            annot=True, fmt="f",cmap="YlGnBu")
+for c in interested:
+    df[c] = df[c].astype(float)
+ # 种族值分布
+df = df.assign(total_stats = df[interested].sum(axis=1)) 
+total_stats = df.total_stats
+plt.hist(total_stats,bins=35)
+plt.xlabel('total_stats')
+plt.ylabel('Frequency')
+
+# 不同属性的种族值分布
+plt.subplots(figsize=(20,12))
+ax = sns.violinplot(x="type1", y="total_stats",
+                    data=df, palette="muted")
+df[(df.total_stats >= 570) & (df.is_legendary == 0)]['name'].head(10)
+
